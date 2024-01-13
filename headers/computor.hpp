@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 21:47:17 by mbabela           #+#    #+#             */
-/*   Updated: 2023/10/21 21:30:23 by mbabela          ###   ########.fr       */
+/*   Updated: 2023/11/12 00:45:11 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 class Computor 
 {
     private:
-        std::string __secondQ;
-        std::string __firstQ;
-        std::string __Quo;
-        std::string __Res;
-        std::string __Discriminent;
-        std::string __degree;
+        float __secondQ;
+        float __firstQ;
+        float __Quo;
+        float __Res;
+        float __Discriminent;
+        int __degree;
 
     public:
         Computor();
@@ -32,26 +32,26 @@ class Computor
         Computor(Computor &);
         ~Computor();
 
-        Computor*   operator=(const Computor& );
-        friend std::ostream & operator << (std::ostream &out, const Computor& );
+        Computor*               operator=(const Computor& );
+        friend std::ostream &   operator << (std::ostream &out, const Computor& );
 
-        std::string const & getSecond(void);
-        std::string const & getFirst(void);
-        std::string const & getQou(void);
-        std::string const & getRes(void);
-        std::string const & getDiscriminent(void);
-        std::string const & getDegree(void);
+        float       const & getSecond(void);
+        float       const & getFirst(void);
+        float       const & getQou(void);
+        float       const & getRes(void);
+        float       const & getDiscriminent(void);
+        int         const & getDegree(void);
 
-        void        setSecond(std::string);
-        void        setFirst(std::string);
-        void        setQou(std::string);
-        void        setRes(std::string);
-        void        setDiscriminet(std::string);
-        void        setDegree(std::string);
+        void        setSecond(float);
+        void        setFirst(float);
+        void        setQou(float);
+        void        setRes(float);
+        void        setDiscriminet(float);
+        void        setDegree(int);
 
-        int         getPArts(std::string, std::string, int );
+        size_t      getPArts(std::string, std::string, size_t );
 
-        std::string CalculateDiscriminent(std::string, std::string, std::string);
+        float       CalculateDiscriminent(float, float, float);
 
 };
 
