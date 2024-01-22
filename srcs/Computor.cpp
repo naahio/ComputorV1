@@ -6,13 +6,21 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2023/11/16 15:44:45 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/01/22 12:51:54 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../headers/Computor.hpp"
 
-Computor::Computor() {}
+Computor::Computor() {
+    this->__secondQ = 0;
+    this->__firstQ = 0;
+    this->__Quo = 0;
+    this->__Res = 0;
+    this->__Discriminent = 0;
+    this->__degree = 0;
+}
+
 Computor::Computor(std::string equation) {
     std::cout << "length : " << equation.length() << std::endl;
     for (size_t i = 0; i < equation.length(); i++)
@@ -44,6 +52,7 @@ Computor* Computor::operator=(const Computor& obj){
     this->__degree = obj.__degree;
     return this;
 }
+
 std::ostream& operator<<(std::ostream &os, Computor& n){
     os << "Reduced form : "<< n.getQou() << " " << std::endl;
     std::cout << "Polynomial degree: " << std::endl;
@@ -65,6 +74,7 @@ void        Computor::setQou(float str){this->__Quo = str; }
 void        Computor::setRes(float str){this->__Res = str; }
 void        Computor::setDiscriminet(float str) {this->__Discriminent = str; }
 void        Computor::setDegree(int str) {this->__degree = str; }
+
 size_t      Computor::getPArts(std::string attribute, std::string equation, size_t i)
 {
     size_t      len;
@@ -76,19 +86,21 @@ size_t      Computor::getPArts(std::string attribute, std::string equation, size
     std::cout << "------- Getting : " << attribute << " ---------" << std::endl; 
     for (; (i < equation.length()); i++)
     {   
+        if (!attribute.compare("__secondQ"))
+            std::cout << "i : " << equation[i] << std::endl;
         if (equation[i] == '*')
             break;
         if (equation[i] != ' ')
-        result += equation[i];
+            result += equation[i];
     }
-    std::cout << "--------> result : ["<< result<<"] " << std::endl;
-    if (attribute.compare("__Quo"))
+    // std::cout << "--------> result : ["<< result<<"]  | " << attribute << std::endl;
+    if (!attribute.compare("__Quo"))
         this->__Quo = std::stof(result);
-    else if (attribute.compare("__firstQ"))
+    else if (!attribute.compare("__firstQ"))
         this->__firstQ = std::stof(result);
-    else if (attribute.compare("__secondQ"))
+    else if (!attribute.compare("__secondQ"))
         this->__secondQ = std::stof(result);
-    else if (attribute.compare("__Res"))
+    else if (!attribute.compare("__Res"))
         this->__Res = std::stof(result);
     for (; (i < equation.length() && equation[i] != '+' 
         && equation[i] != '-' && equation[i] != '='); i++)
