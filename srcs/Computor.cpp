@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2024/01/22 12:51:54 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/01/23 13:25:00 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ Computor::Computor(std::string equation) {
     std::cout << "length : " << equation.length() << std::endl;
     for (size_t i = 0; i < equation.length(); i++)
     {
-        i += getPArts("__Quo", equation, i);
+            i += getPArts("__Quo", equation, i);
         std::cout << "--> __Quo : " << this->__Quo << std::endl;
-        i += getPArts("__firstQ", equation, i);
+            i += getPArts("__firstQ", equation, i);
         std::cout << "--> __firstQ : " << this->__firstQ << std::endl;
-        i += getPArts("__secondQ", equation, i);
-        std::cout << "--> __secondQ : " << this->__secondQ << std::endl;
-        i += getPArts("__Res", equation, i);
+            i += getPArts("__secondQ", equation, i);
+        std::cout << "--> __secondQ : " << this->__secondQ <<  std::endl;
+            i += getPArts("__Res", equation, i);
         std::cout << "--> __Res : " << this->__Res << std::endl;
     }
     this->__Discriminent = CalculateDiscriminent(this->__Quo, this->__firstQ, this->__secondQ);
@@ -61,19 +61,19 @@ std::ostream& operator<<(std::ostream &os, Computor& n){
     return os;
 }
 
-float   const & Computor::getSecond(void){ return this->__secondQ; }
-float   const & Computor::getFirst(void){ return this->__firstQ; }
-float   const & Computor::getQou(void){ return this->__Quo; }
-float   const & Computor::getRes(void){ return this->__Res; }
-float   const & Computor::getDiscriminent(void){ return this->__Discriminent; }
-int     const & Computor::getDegree(void){return this->__degree; }
+float   const & Computor::getSecond(void) { return this->__secondQ; }
+float   const & Computor::getFirst(void) { return this->__firstQ; }
+float   const & Computor::getQou(void) { return this->__Quo; }
+float   const & Computor::getRes(void) { return this->__Res; }
+float   const & Computor::getDiscriminent(void) { return this->__Discriminent; }
+int     const & Computor::getDegree(void) { return this->__degree; }
 
-void        Computor::setSecond(float str){this->__secondQ = str; }
-void        Computor::setFirst(float str){this->__firstQ = str; }
-void        Computor::setQou(float str){this->__Quo = str; }
-void        Computor::setRes(float str){this->__Res = str; }
-void        Computor::setDiscriminet(float str) {this->__Discriminent = str; }
-void        Computor::setDegree(int str) {this->__degree = str; }
+void        Computor::setSecond(float str) { this->__secondQ = str; }
+void        Computor::setFirst(float str) { this->__firstQ = str; }
+void        Computor::setQou(float str) { this->__Quo = str; }
+void        Computor::setRes(float str) { this->__Res = str; }
+void        Computor::setDiscriminet(float str) { this->__Discriminent = str; }
+void        Computor::setDegree(int str) { this->__degree = str; }
 
 size_t      Computor::getPArts(std::string attribute, std::string equation, size_t i)
 {
@@ -81,13 +81,11 @@ size_t      Computor::getPArts(std::string attribute, std::string equation, size
     size_t      start;
     std::string result;
 
-    start = i;
+    start = 0;
     len = 0;
-    std::cout << "------- Getting : " << attribute << " ---------" << std::endl; 
-    for (; (i < equation.length()); i++)
-    {   
-        if (!attribute.compare("__secondQ"))
-            std::cout << "i : " << equation[i] << std::endl;
+    std::cout << "------- Getting : " << attribute  << " ---------" << std::endl; 
+    for (; (i < equation.length()); i++, start++)
+    {    
         if (equation[i] == '*')
             break;
         if (equation[i] != ' ')
@@ -103,9 +101,10 @@ size_t      Computor::getPArts(std::string attribute, std::string equation, size
     else if (!attribute.compare("__Res"))
         this->__Res = std::stof(result);
     for (; (i < equation.length() && equation[i] != '+' 
-        && equation[i] != '-' && equation[i] != '='); i++)
+        && equation[i] != '-' && equation[i] != '='); i++, start++)
         ;
-    return (i);
+    // std::cout << "skipping : " << equation[i] << std::endl;
+    return (start);
 }
 
 float Computor::CalculateDiscriminent(float qou, float first, float second) {
