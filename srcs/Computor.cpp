@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2024/01/23 13:25:00 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/01/24 13:11:21 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,18 @@ Computor::Computor(std::string equation) {
     std::cout << "length : " << equation.length() << std::endl;
     for (size_t i = 0; i < equation.length(); i++)
     {
-            i += getPArts("__Quo", equation, i);
-        std::cout << "--> __Quo : " << this->__Quo << std::endl;
-            i += getPArts("__firstQ", equation, i);
-        std::cout << "--> __firstQ : " << this->__firstQ << std::endl;
-            i += getPArts("__secondQ", equation, i);
-        std::cout << "--> __secondQ : " << this->__secondQ <<  std::endl;
-            i += getPArts("__Res", equation, i);
-        std::cout << "--> __Res : " << this->__Res << std::endl;
+        i += getPArts("__Quo", equation, i);
+            std::cout << "--> __Quo : " << this->__Quo << std::endl;
+        i += getPArts("__firstQ", equation, i);
+            std::cout << "--> __firstQ : " << this->__firstQ << std::endl;
+        i += getPArts("__secondQ", equation, i);
+            std::cout << "--> __secondQ : " << this->__secondQ <<  std::endl;
+        i += getPArts("__QuoF", equation, i);
+            std::cout << "--> __QuoF : " << this->__QuoF << std::endl;
+        i += getPArts("__firstQF", equation, i);
+            std::cout << "--> __firstQF : " << this->__firstQF << std::endl;
+        i += getPArts("__secondQF", equation, i);
+            std::cout << "--> __secondQF : " << this->__secondQF <<  std::endl;
     }
     this->__Discriminent = CalculateDiscriminent(this->__Quo, this->__firstQ, this->__secondQ);
     std::cout << equation << std::endl;
@@ -64,6 +68,9 @@ std::ostream& operator<<(std::ostream &os, Computor& n){
 float   const & Computor::getSecond(void) { return this->__secondQ; }
 float   const & Computor::getFirst(void) { return this->__firstQ; }
 float   const & Computor::getQou(void) { return this->__Quo; }
+float   const & Computor::getSecondF(void) { return this->__secondQF; }
+float   const & Computor::getFirstF(void) { return this->__firstQF; }
+float   const & Computor::getQouF(void) { return this->__QuoF; }
 float   const & Computor::getRes(void) { return this->__Res; }
 float   const & Computor::getDiscriminent(void) { return this->__Discriminent; }
 int     const & Computor::getDegree(void) { return this->__degree; }
@@ -71,6 +78,9 @@ int     const & Computor::getDegree(void) { return this->__degree; }
 void        Computor::setSecond(float str) { this->__secondQ = str; }
 void        Computor::setFirst(float str) { this->__firstQ = str; }
 void        Computor::setQou(float str) { this->__Quo = str; }
+void        Computor::setSecondF(float str) { this->__secondQF = str; }
+void        Computor::setFirstF(float str) { this->__firstQF = str; }
+void        Computor::setQouF(float str) { this->__QuoF = str; }
 void        Computor::setRes(float str) { this->__Res = str; }
 void        Computor::setDiscriminet(float str) { this->__Discriminent = str; }
 void        Computor::setDegree(int str) { this->__degree = str; }
@@ -83,27 +93,37 @@ size_t      Computor::getPArts(std::string attribute, std::string equation, size
 
     start = 0;
     len = 0;
-    std::cout << "------- Getting : " << attribute  << " ---------" << std::endl; 
+    std::cout << "-------------- Round : " << i  << " ----------------" << std::endl;
+    if (!(i < equation.length()))
+        return (0);
     for (; (i < equation.length()); i++, start++)
     {    
         if (equation[i] == '*')
             break;
         if (equation[i] != ' ')
             result += equation[i];
-    }
-    // std::cout << "--------> result : ["<< result<<"]  | " << attribute << std::endl;
+    } 
+    // std::cout << "--------> result : ["<< result <<"]  | " << attribute << std::endl;
     if (!attribute.compare("__Quo"))
         this->__Quo = std::stof(result);
     else if (!attribute.compare("__firstQ"))
         this->__firstQ = std::stof(result);
     else if (!attribute.compare("__secondQ"))
         this->__secondQ = std::stof(result);
-    else if (!attribute.compare("__Res"))
-        this->__Res = std::stof(result);
+    if (!attribute.compare("__QuoF"))
+        this->__QuoF = std::stof(result);
+    else if (!attribute.compare("__firstQF"))
+        this->__firstQF = std::stof(result);
+    else if (!attribute.compare("__secondQF"))
+        this->__secondQF = std::stof(result);
+    // else if (!attribute.compare("__Res"))
+    //     this->__Res = std::stof(result);
     for (; (i < equation.length() && equation[i] != '+' 
         && equation[i] != '-' && equation[i] != '='); i++, start++)
         ;
-    // std::cout << "skipping : " << equation[i] << std::endl;
+    if (equation[i] == '=')
+        start++;
+    // std::cout << "=====>>>>> skipping : " << equation[i] << std::endl;
     return (start);
 }
 
