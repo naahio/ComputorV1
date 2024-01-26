@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2024/01/26 15:51:15 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/01/26 15:59:37 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ size_t      Computor::getPArts(std::string attribute, std::string equation, size
         this->__firstQF = std::stof(result);
     else if (!attribute.compare("__secondQF"))
         this->__secondQF = std::stof(result);
-    // else if (!attribute.compare("__Res"))
-    //     this->__Res = std::stof(result);
+    else if (!attribute.compare("__thirdQF"))
+        this->__thirdQF = std::stof(result);
     for (; (i < equation.length() && equation[i] != '+' 
         && equation[i] != '-' && equation[i] != '='); i++, start++)
         ;
