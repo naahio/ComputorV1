@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 21:47:17 by mbabela           #+#    #+#             */
-/*   Updated: 2024/01/23 13:45:02 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/01/26 14:44:55 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 class Computor 
 {
     private:
+        float __thirdQ;
         float __secondQ;
         float __firstQ;
         float __Quo;
+        float __thirdQF;
         float __secondQF;
         float __firstQF;
         float __QuoF;
@@ -38,9 +40,11 @@ class Computor
         Computor*               operator=(const Computor& );
         friend std::ostream &   operator << (std::ostream &out, const Computor& );
 
+        float       const & getThird (void);
         float       const & getSecond (void);
         float       const & getFirst (void);
         float       const & getQou (void);
+        float       const & getThirdF (void);
         float       const & getSecondF (void);
         float       const & getFirstF (void);
         float       const & getQouF (void);
@@ -48,9 +52,11 @@ class Computor
         float       const & getDiscriminent (void);
         int         const & getDegree (void);
 
+        void        setThird (float);
         void        setSecond (float);
         void        setFirst (float);
         void        setQou (float);
+        void        setThirdF (float);
         void        setSecondF (float);
         void        setFirstF (float);
         void        setQouF (float);
