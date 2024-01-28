@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2024/01/26 15:59:37 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/01/28 15:07:09 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ Computor::Computor(std::string equation) {
     this->__Discriminent = CalculateDiscriminent(this->__Quo, this->__firstQ, this->__secondQ);
     std::cout << equation << std::endl;
 }
-  
+
 Computor::Computor(Computor &obj) {
     *this = obj;
 }
