@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 21:45:18 by mbabela           #+#    #+#             */
-/*   Updated: 2023/11/12 01:27:17 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:29:44 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@ int main(int ac, char **av)
         return 0;
     }
     Computor *eq = new Computor(av[1]);
-    std::cout << eq << std::endl;
+    eq->setDegree(eq->CalcutlateDegree(av[1]));
+    // std::cout << eq << std::endl;
+    std::cout << "Polynomial degree: " << eq->getDegree() << std::endl;
 }

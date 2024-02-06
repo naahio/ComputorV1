@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 21:47:17 by mbabela           #+#    #+#             */
-/*   Updated: 2024/01/26 14:44:55 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/02/06 14:40:06 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include <iostream>
 # include <string>
-
+# include <vector>  
+# include <sstream> 
 class Computor 
 {
     private:
@@ -64,11 +65,14 @@ class Computor
         void        setDiscriminet (float);
         void        setDegree (int);
 
-        size_t      getPArts (std::string, std::string, size_t );
+        size_t      getPArts (std::string, std::string, size_t , bool *);
 
         float       CalculateDiscriminent (float, float, float);
 
+        int         CalcutlateDegree(std::string );
 };
+
+void    split(std::string const &, char , std::vector<std::string> &);
 
 
 #endif
