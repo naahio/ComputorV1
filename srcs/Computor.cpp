@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2024/02/06 15:32:03 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:37:35 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ Computor::Computor(std::string equation) {
     std::cout << "length : " << equation.length() << std::endl;
     for (size_t i = 0; i < equation.length(); i++)
     {
-        std::cout ><<
         if (!foundEqual) {
             i += getPArts("__Quo", equation, i, &foundEqual);
                 std::cout << "--> __Quo : " << this->__Quo << std::endl;
@@ -40,6 +39,7 @@ Computor::Computor(std::string equation) {
                 std::cout << "--> __firstQ : " << this->__firstQ << std::endl;
             i += getPArts("__secondQ", equation, i, &foundEqual);
                 std::cout << "--> __secondQ : " << this->__secondQ <<  std::endl;
+            std::cout << "equal : " << foundEqual << std::endl;
             i += getPArts("__thirdQ", equation, i, &foundEqual);
                 std::cout << "--> __thirdQ : " << this->__thirdQ <<  std::endl;
         } else {
