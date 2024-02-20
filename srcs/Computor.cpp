@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2024/02/06 15:37:35 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:13:28 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,28 @@ Computor::Computor() {
     this->__Discriminent = 0;
 }
 
-
 Computor::Computor(std::string equation) {
     bool foundEqual = false;
 
-    std::cout << "length : " << equation.length() << std::endl;
     for (size_t i = 0; i < equation.length(); i++)
     {
         if (!foundEqual) {
             i += getPArts("__Quo", equation, i, &foundEqual);
-                std::cout << "--> __Quo : " << this->__Quo << std::endl;
             i += getPArts("__firstQ", equation, i, &foundEqual);
-                std::cout << "--> __firstQ : " << this->__firstQ << std::endl;
             i += getPArts("__secondQ", equation, i, &foundEqual);
-                std::cout << "--> __secondQ : " << this->__secondQ <<  std::endl;
-            std::cout << "equal : " << foundEqual << std::endl;
             i += getPArts("__thirdQ", equation, i, &foundEqual);
-                std::cout << "--> __thirdQ : " << this->__thirdQ <<  std::endl;
         } else {
             i += getPArts("__QuoF", equation, i, &foundEqual);
-                std::cout << "--> __QuoF : " << this->__QuoF << std::endl;
             i += getPArts("__firstQF", equation, i, &foundEqual);
-                std::cout << "--> __firstQF : " << this->__firstQF << std::endl;
             i += getPArts("__secondQF", equation, i, &foundEqual);
-                std::cout << "--> __secondQF : " << this->__secondQF <<  std::endl;
-            i += getPArts("__thirdQF ", equation, i, &foundEqual);
-                std::cout << "--> __thirdQF : " << this->__thirdQF <<  std::endl;
+            i += getPArts("__thirdQF", equation, i, &foundEqual);
         }
     }
-
+    
     this->__Discriminent = CalculateDiscriminent(this->__Quo, this->__firstQ, this->__secondQ);
     std::cout << equation << std::endl;
-
+    std::cout << "Reduced Form : " << this->getReducedForm() << std::endl;
+    
 }
 
 Computor::Computor(Computor &obj) {
@@ -75,10 +65,10 @@ Computor* Computor::operator=(const Computor& obj){
 }
 
 std::ostream& operator<<(std::ostream &os, Computor& n){
-    os << "Reduced form : "<< n.getQou() << " " << std::endl;
+    os << "Reduced form : "<< n.getReducedForm() << " " << std::endl;
     std::cout << "Polynomial degree: " << n.getDegree() << std::endl;
-    std::cout << "Discriminant is b^2 - 4ac: " << std::endl;
-    std::cout << "solutions are : > 0 => (sqrt(disc))/2 | (sqrt(disc))/2" << std::endl;
+    std::cout << "Discriminant is b^2 - 4ac: " << n.getDiscriminent() << std::endl;
+    // std::cout << "solutions are : > 0 => (sqrt(disc))/2 | (sqrt(disc))/2" << n.getSolutions() << std::endl;
     return os;
 }
 
@@ -91,7 +81,14 @@ float   const & Computor::getSecondF (void) { return this->__secondQF; }
 float   const & Computor::getFirstF (void) { return this->__firstQF; }
 float   const & Computor::getQouF (void) { return this->__QuoF; }
 float   const & Computor::getRes (void) { return this->__Res; }
+
 float   const & Computor::getDiscriminent (void) { return this->__Discriminent; }
+
+float   const & Computor::getReducedFormQuo(void) { return this->reducedFromQuo; }
+float   const & Computor::getReducedFormFirstQ(void) { return this->reducedFromFirstQ; }
+float   const & Computor::getReducedFormSecondQ(void) { return this->reducedFromSecondQ; };
+float   const & Computor::getReducedFormThirst(void) { return this->reducedFromThirdQ; };
+
 int     const & Computor::getDegree (void) { return this->__degree; }
 
 void        Computor::setThird (float str) { this->__thirdQ = str; }
@@ -103,7 +100,14 @@ void        Computor::setSecondF (float str) { this->__secondQF = str; }
 void        Computor::setFirstF (float str) { this->__firstQF = str; }
 void        Computor::setQouF (float str) { this->__QuoF = str; }
 void        Computor::setRes (float str) { this->__Res = str; }
+
 void        Computor::setDiscriminet (float str) { this->__Discriminent = str; }
+
+void        Computor::setReducedFormQuo(float Var) { this->reducedFromQuo = Var; }
+void        Computor::setReducedFormFirstQ(float Var) { this->reducedFromFirstQ = Var; }
+void        Computor::setReducedFormSecondQ(float Var) { this->reducedFromSecondQ = Var; }
+void        Computor::setReducedFormThirdQ(float Var) { this->reducedFromThirdQ = Var; }
+
 void        Computor::setDegree (int str) { this->__degree = str; }
 
 size_t      Computor::getPArts(std::string attribute, std::string equation, size_t i, bool *foundEqual)
@@ -114,7 +118,7 @@ size_t      Computor::getPArts(std::string attribute, std::string equation, size
 
     start = 0;
     len = 0;
-    if (!(i < equation.length()))
+    if ((i >= equation.length()))
         return (0);
     for (; (i < equation.length()); i++, start++)
     {    
@@ -123,22 +127,30 @@ size_t      Computor::getPArts(std::string attribute, std::string equation, size
         if (equation[i] != ' ')
             result += equation[i];
     }
-    if (!attribute.compare("__Quo"))
+    if (!attribute.compare("__Quo")) {
         this->__Quo = std::stof(result);
-    else if (!attribute.compare("__firstQ"))
+    }
+    else if (!attribute.compare("__firstQ")) {
         this->__firstQ = std::stof(result);
-    else if (!attribute.compare("__secondQ"))
+    }
+    else if (!attribute.compare("__secondQ")){
         this->__secondQ = std::stof(result);
-    else if (!attribute.compare("__thirdQ"))
+    }
+    else if (!attribute.compare("__thirdQ")) {
         this->__thirdQ = std::stof(result);
-    else if (!attribute.compare("__QuoF"))
+    }
+    else if (!attribute.compare("__QuoF")) {
         this->__QuoF = std::stof(result);
-    else if (!attribute.compare("__firstQF"))
+    }
+    else if (!attribute.compare("__firstQF")) {
         this->__firstQF = std::stof(result);
-    else if (!attribute.compare("__secondQF"))
+    }
+    else if (!attribute.compare("__secondQF")) {
         this->__secondQF = std::stof(result);
-    else if (!attribute.compare("__thirdQF"))
+    }
+    else if (!attribute.compare("__thirdQF")) {
         this->__thirdQF = std::stof(result);
+    }
     for (; (i < equation.length() && equation[i] != '+' 
         && equation[i] != '-' && equation[i] != '='); i++, start++)
         ;
@@ -147,6 +159,58 @@ size_t      Computor::getPArts(std::string attribute, std::string equation, size
         start++;
     }
     return (start);
+}
+
+std::string Computor::getReducedForm() {
+    std::string reducedForm = "";
+    std::string Quo;
+    std::string FirstQ;
+    std::string SecondQ;
+    std::string ThirdQ;
+    std::stringstream ss;
+    std::stringstream ss1;
+    std::stringstream ss2;
+    std::stringstream ss3;
+
+    ss << (this->__Quo + this->__QuoF);
+    Quo     =   ss.str();
+    ss1 << (this->__firstQ + this->__firstQF);
+    FirstQ  =   ss1.str();
+    ss2 << (this->__secondQ + this->__secondQF);
+    SecondQ =   ss2.str(); 
+    ss3 << (this->__thirdQ + this->__thirdQF);
+    ThirdQ  =   ss3.str(); 
+
+    if (Quo.compare("0")) {
+        if ((this->__firstQ + this->__firstQF) > 0)
+            Quo += " * X^0 + ";
+        else
+            Quo += " * X^0 ";
+        reducedForm += Quo;
+    }
+    if (FirstQ.compare("0")) {
+        if ((this->__secondQ + this->__secondQF) > 0)
+            FirstQ += " * X^1 + ";
+        else
+            FirstQ += " * X^1 ";
+
+        reducedForm += FirstQ;
+    }
+    if (SecondQ.compare("0")) {
+        if ((this->__thirdQ + this->__thirdQF) > 0)
+            SecondQ += " * X^2 + ";
+        else
+            SecondQ += " * X^2 ";
+        reducedForm += SecondQ;
+    }
+    if (ThirdQ.compare("0")) {
+        ThirdQ += " * X^3 ";
+        reducedForm += ThirdQ;
+    }
+    reducedForm += " = 0";
+    std::cout << reducedForm << std::endl;
+
+    return (reducedForm);
 }
 
 float Computor::CalculateDiscriminent(float qou, float first, float second) {

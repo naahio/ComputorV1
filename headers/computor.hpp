@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 21:47:17 by mbabela           #+#    #+#             */
-/*   Updated: 2024/02/06 14:40:06 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:09:03 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
 # include <iostream>
 # include <string>
 # include <vector>  
-# include <sstream> 
+# include <sstream>
+# include <cmath>
+# include <iomanip>
+# include <sstream>
+
 class Computor 
 {
     private:
@@ -31,6 +35,11 @@ class Computor
         float __Res;
         float __Discriminent;
         int __degree;
+
+        float   reducedFromQuo;
+        float   reducedFromFirstQ;
+        float   reducedFromSecondQ;
+        float   reducedFromThirdQ;
 
     public:
         Computor();
@@ -50,7 +59,14 @@ class Computor
         float       const & getFirstF (void);
         float       const & getQouF (void);
         float       const & getRes (void);
+
         float       const & getDiscriminent (void);
+
+        float       const & getReducedFormQuo(void);
+        float       const & getReducedFormFirstQ(void);
+        float       const & getReducedFormSecondQ(void);
+        float       const & getReducedFormThirst(void);
+
         int         const & getDegree (void);
 
         void        setThird (float);
@@ -62,7 +78,14 @@ class Computor
         void        setFirstF (float);
         void        setQouF (float);
         void        setRes (float);
+        
         void        setDiscriminet (float);
+
+        void        setReducedFormQuo(float );
+        void        setReducedFormFirstQ(float );
+        void        setReducedFormSecondQ(float );
+        void        setReducedFormThirdQ(float );
+
         void        setDegree (int);
 
         size_t      getPArts (std::string, std::string, size_t , bool *);
@@ -70,6 +93,9 @@ class Computor
         float       CalculateDiscriminent (float, float, float);
 
         int         CalcutlateDegree(std::string );
+
+        std::string getReducedForm();
+        // std::string getSolutions();
 };
 
 void    split(std::string const &, char , std::vector<std::string> &);
