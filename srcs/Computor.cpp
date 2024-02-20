@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2024/02/20 14:13:28 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:31:00 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,6 @@ std::string Computor::getReducedForm() {
     SecondQ =   ss2.str(); 
     ss3 << (this->__thirdQ + this->__thirdQF);
     ThirdQ  =   ss3.str(); 
-
     if (Quo.compare("0")) {
         if ((this->__firstQ + this->__firstQF) > 0)
             Quo += " * X^0 + ";
