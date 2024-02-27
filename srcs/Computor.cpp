@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2024/02/27 13:20:15 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/02/27 14:09:55 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ std::ostream& operator<<(std::ostream& os, const Computor& n) {
     sleep (1);
     os << "Discriminant is b^2 - 4ac    :   " << n.getDiscriminent() << std::endl;
     sleep (1);
-    os << "solutions are : > 0 => (-b + (sqrt(dist)))/2a | (-b - (sqrt(disc)))/2a" << n.get  << std::endl;
+    os << "solutions are : " << n.getSolutions()  << std::endl;
     return os;
 }
 
@@ -268,15 +268,26 @@ int Computor::CalcutlateDegree(std::string equation) {
     return (0);
 }
 
-
 std::string Computor::getSolutions() const {
     float a = (this->__secondQ - this->__secondQF);
     float b = (this->__firstQ - this->__firstQF);
     float c = (this->__Quo - this->__QuoF);
 
+    std::string result;
+
     if (this->getDegree() > 2)
         return "The polynomial degree is strictly greater than 2, I can't solve. ";
-    if (this->getDiscriminent() < 0) 
-        return "Discriminant is strictly positive, the two solutions are: ";
+    if (this->getDiscriminent() < 0) {
+        result = "Discriminant is strictly positive, the two solutions are: ";
+        
+    }else if (this->getDiscriminent() > 0) {
+        result = "Discriminant is strictly positive, the two solutions are: ";
+
+    }else {
+        result = "Discriminant is NULL.";
+        
+    }
+
+    return result;
 
 }
