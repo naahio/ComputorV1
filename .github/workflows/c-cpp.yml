@@ -1,23 +1,24 @@
-name: C/C++ CI
+name: Test Computor
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: configure                   xczxfwdsz   czxgrefds
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Build Computor
+      run: |
+        make
+
+    - name: Run Computor
+      run: |
+        ./computor "-6 * X^0 - 1 * X^1 + 1 * X^2 = 0"
+      run: |
+        ./computor  "-6 * X^0 - 1 * X^1 + 1 * X^2 + 1 * X^3= 0"
