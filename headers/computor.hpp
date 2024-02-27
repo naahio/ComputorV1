@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 21:47:17 by mbabela           #+#    #+#             */
-/*   Updated: 2024/02/20 14:09:03 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/02/27 13:13:39 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <cmath>
 # include <iomanip>
 # include <sstream>
+# include <unistd.h>
 
 class Computor 
 {
@@ -34,6 +35,7 @@ class Computor
         float __QuoF;
         float __Res;
         float __Discriminent;
+
         int __degree;
 
         float   reducedFromQuo;
@@ -48,7 +50,6 @@ class Computor
         ~Computor();
 
         Computor*               operator=(const Computor& );
-        friend std::ostream &   operator << (std::ostream &out, const Computor& );
 
         float       const & getThird (void);
         float       const & getSecond (void);
@@ -60,14 +61,14 @@ class Computor
         float       const & getQouF (void);
         float       const & getRes (void);
 
-        float       const & getDiscriminent (void);
+        float       getDiscriminent (void) const;
 
         float       const & getReducedFormQuo(void);
         float       const & getReducedFormFirstQ(void);
         float       const & getReducedFormSecondQ(void);
         float       const & getReducedFormThirst(void);
 
-        int         const & getDegree (void);
+        int         const & getDegree (void) const ;
 
         void        setThird (float);
         void        setSecond (float);
@@ -90,14 +91,15 @@ class Computor
 
         size_t      getPArts (std::string, std::string, size_t , bool *);
 
-        float       CalculateDiscriminent (float, float, float);
+        float       CalculateDiscriminent (void );
 
         int         CalcutlateDegree(std::string );
 
-        std::string getReducedForm();
-        // std::string getSolutions();
+        std::string getReducedForm(void ) const;
+        std::string getSolutions(void ) const;
 };
 
+std::ostream& operator<<(std::ostream& os, const Computor& n);
 void    split(std::string const &, char , std::vector<std::string> &);
 
 
