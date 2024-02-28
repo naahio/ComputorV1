@@ -6,7 +6,7 @@
 /*   By: mbabela <mbabela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 22:54:09 by mbabela           #+#    #+#             */
-/*   Updated: 2024/02/27 15:00:47 by mbabela          ###   ########.fr       */
+/*   Updated: 2024/02/28 11:56:48 by mbabela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ Computor::Computor(std::string equation) {
         }
     }
     
-    this->__Discriminent = this->CalculateDiscriminent();  
+    this->__Discriminent = this->CalculateDiscriminent(); 
+    this->__degree = this->CalcutlateDegree(equation);
 }
 
 Computor::Computor(Computor &obj) {
@@ -75,9 +76,16 @@ std::ostream& operator<<(std::ostream& os, const Computor& n) {
     sleep (1);
     os << "Polynomial degree            :   " << n.getDegree() << std::endl;
     sleep (1);
-    os << "Discriminant is              :   " << n.getDiscriminent() << std::endl;
-    sleep (1);
-    os << "solutions are                : \n\t" << n.getSolutions()  << std::endl;
+    if (n.getDegree() == 1)
+        os << "solutions are                : \n\t" << n.getSolutions()  << std::endl;
+    else if (n.getDegree() > 2)
+        os << "solutions are                : \n\t" << n.getSolutions()  << std::endl;
+    else
+    {
+        os << "Discriminant is              :   " << n.getDiscriminent() << std::endl;
+        sleep (1);
+        os << "solutions are                : \n\t" << n.getSolutions()  << std::endl;
+    }
     return os;
 }
 
@@ -269,19 +277,28 @@ std::string Computor::getSolutions() const {
 
     std::stringstream ss1;
     std::stringstream ss2;
+    std::stringstream s;
+    std::stringstream s2;
 
     std::string result;
 
     if (this->getDegree() == 1) {
-        result = "Polynomial degree is : " + this->getDegree().str();
-        firstSol = (this->__QuoF - this->__Quo) / this->__firstQ()
+        result = "Equation has only one Solution that is : " ;
+        std::cout << "(" << this->__QuoF << " - " << this->__Quo << " ) / " << this->__firstQ << std::endl;
+        firstSol = (this->__QuoF - this->__Quo) / this->__firstQ;
+        ss1 << firstSol;
+        result += "\t\t" + ss1.str();
+        return (result);
     }
     if (this->getDegree() > 2)
         return "Discriminant is strictly greater than 2, I can't solve it (~.~). \n";
     if (this->getDiscriminent() > 0) {
+   
         result = "Discriminant is strictly positive \\(^.^)/, the two solutions are: (in IR) \n";
-        firstSol = ( -b - sqrt(this->getDiscriminent())) / 2 * a;
-        secondSol = ( -b + sqrt(this->getDiscriminent())) / 2 * a;
+
+        firstSol = (-b  - sqrt(this->getDiscriminent()))  / (2 * a);
+        secondSol = (-b  + sqrt(this->getDiscriminent()))  / (2 * a );
+
         ss1 << firstSol;
         ss2 << secondSol;
 
@@ -296,5 +313,4 @@ std::string Computor::getSolutions() const {
         result = "Discriminant is strictly negative the quation has no solutions (in IR).\n";
         
     return result;
-
 }
