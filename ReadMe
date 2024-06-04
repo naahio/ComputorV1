@@ -1,3 +1,44 @@
-### Computor v1
+ Computor v1
     Make a simple equation solving program. It will take polynomial equations into account. These equations will only require exponents. No complex
 function. The program will have to display its solution(s).
+
+([-+]?\\d*\\.?\\d*): This part of the pattern matches the coefficient of the term. Let's break it down further:
+
+[-+]?: This matches an optional positive or negative sign (- or +).
+\\d*: This matches zero or more digits.
+\\.?: This matches an optional decimal point (.).
+\\d*: This matches zero or more digits after the decimal point.
+So, overall, ([-+]?\\d*\\.?\\d*) matches coefficients like -5, +3.14, 0, -0.25, etc.
+\\* X\\^: This part of the pattern matches the * X^ part of the term literally.
+ It ensures that the term contains the multiplication sign (*), followed by a space, then the variable X, and the exponentiation sign ^.
+
+(\\d+): This part of the pattern matches the exponent of the term:
+
+\\d+: This matches one or more digits.
+So, (\\d+) matches exponents like 0, 1, 2, 123, etc.t
+
+Pattern.compile(patternStr): 
+    This line compiles the regular expression pattern string patternStr
+    into a Pattern object. The Pattern class is a compiled representation of a regular expression.
+    It allows us to efficiently reuse the compiled pattern to match against multiple input strings.
+
+Matcher matcher = pattern.matcher(equation): 
+    This line creates a Matcher object from the compiled Pattern object pattern, 
+    and it initializes the Matcher with the input string equation. 
+    The Matcher class is used to perform match operations on a character sequence by interpreting the Pattern.
+
+
+
+Pattern.compile(patternStr):
+
+Pattern.compile() is a static method of the Pattern class in Java's java.util.regex package.
+It compiles the given regular expression pattern string (patternStr) into a Pattern object.
+The Pattern object represents a compiled version of the regular expression pattern, which can be efficiently reused multiple times.
+This compilation step checks the syntax of the regular expression and generates bytecode that represents the pattern for efficient matching.
+pattern.matcher(input):
+
+pattern is an instance of the Pattern class created by Pattern.compile().
+pattern.matcher(input) creates a Matcher object that will be used to perform match operations on the input string (input).
+The Matcher class is also part of the java.util.regex package.
+The Matcher object is initialized with the input string (input), which is the text we want to search for matches within.
+Once we have a Matcher object, we can use its methods like find(), matches(), group(), etc., to perform various match operations on the input string according to the compiled regular expression pattern.
