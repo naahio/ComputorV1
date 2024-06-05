@@ -1,4 +1,5 @@
 import java.util.regex.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,23 +18,20 @@ public class Computor {
         List<Double> rhsCoefficients = new ArrayList<>();
         List<Integer> rhsExponents = new ArrayList<>();
 
-        // Process the left-hand side
         processSide(equationSides[0], lhsCoefficients, lhsExponents, true);
-        // Process the right-hand side
         processSide(equationSides[1], rhsCoefficients, rhsExponents, false);
 
-        // Subtract coefficients on the RHS from coefficients on the LHS
-        for (int i = 0; i < rhsCoefficients.size(); i++) {
-            lhsCoefficients.set(i, lhsCoefficients.get(i) + rhsCoefficients.get(i));
-        }
+        if (rhsCoefficients.size() > lhsCoefficients.size())
+            addCoefficients(rhsCoefficients, rhsExponents,lhsCoefficients, lhsExponents);
+        else
+            addCoefficients(lhsCoefficients, lhsExponents, rhsCoefficients, rhsExponents);
 
-        // Combine exponents from both sides
         lhsExponents.addAll(rhsExponents);
-
+ 
         System.out.println("Reduced form: " + getReducedForm(lhsCoefficients, lhsExponents));
         int degree = getPolynomialDegree(lhsExponents);
         System.out.println("Polynomial degree: " + degree);
-
+ 
         switch (degree) {
             case 0:
                 solveDegreeZero(lhsCoefficients);
@@ -46,6 +44,18 @@ public class Computor {
                 break;
             default:
                 System.out.println("The polynomial degree is greater than 2. I can't solve it.");
+        }
+    }
+
+    public static void addCoefficients(List<Double>lgCoefficients, List<Integer>lgExponents, List<Double> smCoeffiecients, List<Integer> smExponents) {
+
+        for (int i = 0; i < lgCoefficients.size(); i++) {
+            for (int j = 0; j < smCoeffiecients.size(); j++) {
+                if (smExponents.get(j) == lgExponents.get(i)) {
+                    lgCoefficients.set(i, lgCoefficients.get(i) + smCoeffiecients.get(j));
+                }
+            }
+            // lhsCoefficients.set(i, lhsCoefficients.get(i) + rhsCoefficients.get(i));
         }
     }
 
@@ -131,17 +141,38 @@ public class Computor {
         double discriminant = b * b - 4 * a * c;
 
         if (discriminant > 0) {
-            double root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-            double root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+            double sol1 = Double.parseDouble(new DecimalFormat("##.##").format((-b + Math.sqrt(discriminant)) / (2 * a)));
+            double sol2 = Double.parseDouble(new DecimalFormat("##.##").format((-b - Math.sqrt(discriminant)) / (2 * a)));
             System.out.println("Discriminant is strictly positive, the two solutions are:");
-            System.out.println(root1);
-            System.out.println(root2);
+            System.out.println(sol1);
+            System.out.println(sol2);
         } else if (discriminant == 0) {
-            double root = -b / (2 * a);
+            double sol = Double.parseDouble(new DecimalFormat("##.##").format(-b / (2 * a)));
             System.out.println("Discriminant is zero, the solution is:");
-            System.out.println(root);
+            System.out.println(sol);
         } else {
             System.out.println("Discriminant is strictly negative, there are no real solutions.");
+            System.out.println("The 2 Complexed Solutions  Are : ");
+            StringBuilder sol1 = new StringBuilder();
+            sol1.append(-b / 2 * a);
+            sol1.append(" ");
+            double res1 = Double.parseDouble(new DecimalFormat("##.##").format(-Math.sqrt(-discriminant) / 2 * a));
+            if (res1 > 0)
+                sol1.append( + res1);
+            else
+                sol1.append( res1);
+            sol1.append(" i");
+            StringBuilder sol2 = new StringBuilder();
+            sol2.append(b / 2 * a);
+            sol2.append(" ");
+            double res2 = Double.parseDouble(new DecimalFormat("##.##").format(-Math.sqrt(-discriminant) / 2 * a));
+            if (res2 > 0)
+                sol2.append( + res2);
+            else
+                sol2.append( res2);
+            sol2.append(" i");
+            System.out.println(sol1);
+            System.out.println(sol2);
         }
     }
 }
